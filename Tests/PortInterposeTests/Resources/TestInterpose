@@ -1,0 +1,27 @@
+#! /opt/homebrew/bin/bash
+
+set -x
+set -euo pipefail
+
+source_port="$1"
+shift
+
+mapped_port="$1"
+shift
+
+cleanup() {
+    status=$? # Preserve the exit status, if any
+    kill "$server_pid" 2>/dev/null || true
+    exit "$status"
+}
+trap cleanup EXIT
+
+# Start a server
+echo RESPONSE | nc -l "$mapped_port" >/dev/null &
+server_pid=$!
+
+# Start a client that does connect on source_port (that in turn should be interposed to the mapped_port) and sends a request.
+# This can not be /usr/bin/nc as that is protected from DYLD_ injections.
+response=$(echo REQUEST | /opt/homebrew/bin/nc localhost "$source_port")
+
+test "$response" = "RESPONSE"
