@@ -31,7 +31,7 @@ let package = Package(
             name: "PortInterposeTests",
             dependencies: ["PortInterposeHook"],
             resources: [
-                .copy("Resources/TestInterpose")
+                .copy("Scripts")
             ]
         )
     ]

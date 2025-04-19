@@ -39,7 +39,7 @@ Basically we hijack bind/connect calls, substituting the given port instead of t
 
 That is accomplished by utilizing DYLD_ family of environment variables to force loading of the given .dylib together with the given executable.
 
-**Disclaimer**: I'm not expert in (socket) networking/did use ChatGPT a lot to figure out the details. Potentially, some other calls need to be hijacked (particularly, getsockname/getpeername), but for Handsfree/Connect IQ simulator bind/connect was enough, so I leave it as-is for now. There's also an [end-to-end (netcat-based) test](Tests/PortInterposeTests/Resources/TestInterpose) employed here, that kind of shows that it works as expected.
+**Disclaimer**: I'm not expert in (socket) networking/did use ChatGPT a lot to figure out the details. Potentially, some other calls need to be hijacked (particularly, getsockname/getpeername), but for Handsfree/Connect IQ simulator bind/connect was enough, so I leave it as-is for now. There's also an [end-to-end (netcat-based) test](Tests/PortInterposeTests/Scripts/TestInterpose) employed here, that kind of shows that it works as expected.
 
 To utilize it in real life, we need to end up with three things in the environment on launching the executable in question, illustrated below:
 

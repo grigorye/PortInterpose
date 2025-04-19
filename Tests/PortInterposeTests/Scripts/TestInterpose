@@ -1,0 +1,16 @@
+#! /bin/bash
+
+set -x
+set -euo pipefail
+
+dylib_path="$1"
+shift
+
+wd=$(dirname "$0")
+
+env \
+    DYLD_INSERT_LIBRARIES="$dylib_path" \
+    DYLD_FORCE_FLAT_NAMESPACE=1 \
+    PORT_INTERPOSE_MAP='{"2345":"5432"}' \
+    \
+    "$wd"/AssertClientServer "2345" "5432" "$@"
